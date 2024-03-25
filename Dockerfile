@@ -33,6 +33,7 @@ RUN echo "Starting Dependency Install" \
         tzdata \
         jq \
         zip \
+        curl \
         wget \
         git \
         apt-transport-https \
