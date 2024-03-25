@@ -22,4 +22,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: mbwilding/dotnet8:latest
+          tags: mbwilding/dotnet-sdk:8.0
