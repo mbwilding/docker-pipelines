@@ -16,8 +16,6 @@ ENV \
     DEBIAN_FRONTEND=noninteractive \
     CI=true
 
-# Install .NET CLI dependencies
-# https://github.com/dotnet/runtime/blob/main/src/installer/pkg/sfx/installers/dotnet-runtime-deps/dotnet-runtime-deps-debian.proj
 RUN \
     apt-get update \
     && apt-get install -y --no-install-recommends \
