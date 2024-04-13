@@ -14,13 +14,12 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     DEBIAN_FRONTEND=noninteractive \
-    CI=true \
-    DOTNET_VERSION=8.0
+    CI=true
 
 # Install .NET CLI dependencies
 # https://github.com/dotnet/runtime/blob/main/src/installer/pkg/sfx/installers/dotnet-runtime-deps/dotnet-runtime-deps-debian.proj
-RUN echo "Starting Dependency Install" \
-    && apt-get update \
+RUN \
+    apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         libc6 \
@@ -43,39 +42,9 @@ RUN echo "Starting Dependency Install" \
     && dpkg -i packages-microsoft-prod.deb \
     && rm packages-microsoft-prod.deb \
     && apt-get update \
-    && apt-get install -y powershell \
+    && apt-get install -y powershell dotnet-sdk-8.0 \
     && rm -rf /var/lib/apt/lists/* \
     && ln -fs /usr/share/zoneinfo/Australia/Perth /etc/localtime \
-    && dpkg-reconfigure tzdata
-
-RUN echo "Starting Dotnet Install" \
-    && dotnet_version=$DOTNET_VERSION \
-    && echo "Downloading Dotnet Core: $dotnet_version" \
-    && case $dotnet_version in \
-        6.0) dotnet_version_dl="6.0.420";; \
-        7.0) dotnet_version_dl="7.0.407";; \
-        8.0) dotnet_version_dl="8.0.203";; \
-        *) \
-            echo "Unknown dotnet version: $dotnet_version" \
-            return 1 \
-            ;; \
-        esac \
-    && echo "Matched DotNet Version $dotnet_version to $dotnet_version_dl" \
-    && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_version_dl/dotnet-sdk-$dotnet_version_dl-linux-x64.tar.gz \
-    && echo "Download Complete. Extracting..." \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
-    && echo "Extraction Complete. Configuring..." \
-    && rm dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
-    && dotnet help \
-    && echo "Installing Additional DotNet Tools" \
-    && dotnet tool install --global dotnet-format \
-    && dotnet tool install --global dotnet-svcutil --version 2.2.0-preview1.23462.5 \
-    && if [ "$dotnet_version" = "8.0" ]; then \
-        echo "Installing dotnet-ef for DotNet 8.0" \
-        && dotnet tool install --global dotnet-ef; \
-        echo "Installing Additional DotNet Workloads for DotNet 8.0" \
-        && dotnet workload install aspire; \
-       fi \
-    && echo "Install Complete"
+    && dpkg-reconfigure tzdata \
+    && dotnet tool install --global dotnet-ef \
+    && dotnet workload install aspire
