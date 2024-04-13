@@ -47,4 +47,5 @@ RUN \
     && ln -fs /usr/share/zoneinfo/Australia/Perth /etc/localtime \
     && dpkg-reconfigure tzdata \
     && dotnet tool install --global dotnet-ef \
+    && dotnet tool install --global GitVersion.Tool \
     && dotnet workload install aspire
