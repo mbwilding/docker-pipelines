@@ -7,4 +7,4 @@ WORKDIR /app
 
 EXPOSE 80
 
-CMD [ "sirv", ".", "--host", "--port", "80", "--single", "--quiet" ]
+CMD [ "sirv", "/app", "--host", "--port", "80", "--single", "--quiet" ]
