@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:bookworm-slim
 
 RUN npm install --global sirv-cli --force
 RUN npm cache clean --force
