@@ -1,14 +1,12 @@
 name: ssh-proxy
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * SUN'
 
 jobs:
-  sirv:
+  ssh-proxy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
