@@ -8,4 +8,4 @@
 } > /tmp/certificate
 chmod 600 /tmp/certificate
 
-ssh -o "StrictHostKeyChecking=no" -D 1080 -N -o "ServerAliveInterval 60" -i /tmp/certificate ${USER}@${HOST} -p ${PORT}
+while true; do ssh -o "StrictHostKeyChecking=no" -D 1080 -N -o "ServerAliveInterval 60" -i /tmp/certificate ${USER}@${HOST} -p ${PORT}; sleep 5; done
