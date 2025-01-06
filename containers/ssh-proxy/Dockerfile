@@ -3,7 +3,8 @@ FROM alpine:latest
 RUN apk add --no-cache \
   openssh-client \
   ca-certificates \
-  bash
+  bash \
+  sed
 
 EXPOSE 1080
 COPY start.sh .
